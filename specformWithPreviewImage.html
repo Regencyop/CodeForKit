@@ -1,0 +1,66 @@
+<section class="specform-default">
+    <!-- BREADCRUMB!-->
+    <productnav editvariant="true" product="Product" variant="Variant" />
+    <!-- SPEC FORM IMAGE PANEL!-->
+    <div class="col-md-4" ng-hide="!Variant.PreviewUrl">
+        <div class="panel panel-default">
+            <loadingindicator ng-show="loadingImage" />
+            <div class="panel-body">
+                <figure>
+                    <img class="product-image-large img-responsive" ng-src="{{Variant.PreviewUrl}}" imageonload />
+                </figure>
+            </div>
+        </div>
+    </div>
+    <div ng-class="{'col-xs-12': !Variant.PreviewUrl, 'col-md-7 col-md-offset-1': Variant.PreviewUrl }">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span ng-show="Variant.PreviewUrl">{{'Edit' | r | xlat}} </span>{{Variant.ExternalID || 'Create New' | xlat}}</h3>
+            </div>
+            <div class="panel-body">
+                <div id="451_list_vspec" ng-show="true">
+                    <div class="form-group">
+                        <!--Image Preview-->
+                        <div ng-class="{'hidden': Variant.PreviewUrl, 'imagePreviewTwoColumn col-xs-12 col-sm-12 col-md-6 col-lg-6': !Variant.PreviewUrl }">
+                            <img ng-src="{{Product.LargeImageUrl}}" imageonload />
+                        </div>
+                            <div class="specformRight" ng-class="{'col-lg-12': Variant.PreviewUrl, 'col-lg-6': !Variant.PreviewUrl}">
+                            <!-- Starts Here -->
+
+                            <!-- Ends Here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <div class="panel-footer">
+                <button ng-show="Variant.InteropID" class="btn btn-default" type="button" ng-click="saveasnew(true)"><i ng-show="variantErrors.length > 0" class="fa fa-warning"> </i>{{'Save As New' | r | xlat}}</button>
+                <button class="btn btn-primary pull-right" type="submit" ng-click="save(true)"><i ng-show="variantErrors.length > 0" class="fa fa-warning"> </i>{{'Save' | r | xlat}}</button>
+            </div>
+            
+            <div class="navbar-fixed-bottom">
+                <div class="view-error-message" ng-show="showVariantErrors && variantErrors.length">
+                    <ul class="alert-warning">
+                        <li class="text-center">
+                            <span class="badge">
+                                <i class="fa fa-exclamation-circle fa-inverse"></i>
+                                {{variantErrors.length}}
+                            </span>
+                        </li>
+                        <li class="text-center">
+                            <ul ng-class="{'one': errorSection == 'open', 'two': errorSection == '' }">
+                                <li class="alert-warning" ng-repeat="e in variantErrors">{{e | xlat}}</li>                              
+                            </ul>
+                        </li>
+                        <li class="text-center">
+                            <a ng-show="variantErrors.length > 1">
+                                <i class="fa fa-caret-down" ng-click="errorSection = 'open'" ng-hide="errorSection == 'open'"></i>
+                                <i class="fa fa-caret-up" ng-click="errorSection = ''" ng-show="errorSection == 'open'"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

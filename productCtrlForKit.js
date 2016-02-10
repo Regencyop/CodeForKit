@@ -10,7 +10,10 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 		currentPage: 1,
 		pageSize: 10
 	};
-
+	
+	//Start Kit
+	
+	
 	//you will need to match these up to API ID
     var maternityKitIndex = ['/40713/product/40713-MaternityKitItem1', '/40713/product/40713-MaternityKitItem2', '/40713/product/40713-MaternityKitItem3', '/40713/product/40713-MaternityKitItem4', '/40713/product/40713KitLastItem'];
 	var dentistKitIndex = ['/40713/product/40713DentistKitItem1', '/40713/product/40713DentistKitItem2', '/40713/product/40713DentistKitItem3', '/40713/product/40713DentistKitItem4', '/40713/product/40713DentistKitItem5', '/40713/product/40713DentistKitItem6', '/40713/product/40713KitLastItem'];
@@ -34,21 +37,23 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 		var prevKitItemIndex = maternityKitIndex.indexOf(pathname);
 		if (prevKitItemIndex > 0) { 
 			prevKitItemIndex--;
-			console.log(prevKitItemIndex);
+			
 			var prevPath = maternityKitIndex[prevKitItemIndex];
 			var prevPath = prevPath.replace('/40713/', '');
 			$scope.prevItem = prevPath;
-			console.log(prevPath);
+			
 		} 
 		if (prevKitItemIndex == 0) {
 			var prevPath = '/40713/catalog';
 			$scope.prevItem = prevPath;
 			console.log(prevPath);
 		}
-		var kitItemIndex = maternityKitIndex.indexOf(pathname);
-		if (kitItemIndex < maternityKitIndex.length-1) { 
-			kitItemIndex ++;
-			var newPath = maternityKitIndex[kitItemIndex];
+		
+		var nextKitItemIndex = maternityKitIndex.indexOf(pathname);
+		if (nextKitItemIndex < maternityKitIndex.length-1) { 
+			var currentKitItemIndex = nextKitItemIndex;
+			nextKitItemIndex ++;
+			var newPath = maternityKitIndex[nextKitItemIndex];
 			var newPath = newPath.replace('/40713/', '');
 			$scope.nextItem = newPath;
 		} //sets path for next arrow on last item in index
@@ -58,64 +63,10 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 		}
 	}
 	
-	//check for index and increment in dentist Kit 
-	if (dentistKitIndex.indexOf(pathname) != -1) {
-		var prevKitItemIndex = dentistKitIndex.indexOf(pathname);
-		if (prevKitItemIndex > 0) { 
-			prevKitItemIndex--;
-			console.log(prevKitItemIndex);
-			var prevPath = dentistKitIndex[prevKitItemIndex];
-			var prevPath = prevPath.replace('/40713/', '');
-			$scope.prevItem = prevPath;
-			console.log(prevPath);
-		} 
-		if (prevKitItemIndex == 0) {
-			var prevPath = '/40713/catalog';
-			$scope.prevItem = prevPath;
-			console.log(prevPath);
-		}
-		var kitItemIndex = dentistKitIndex.indexOf(pathname);
-		if (kitItemIndex < dentistKitIndex.length-1) { 
-			kitItemIndex ++;
-			var newPath = dentistKitIndex[kitItemIndex];
-			var newPath = newPath.replace('/40713/', '');
-			$scope.nextItem = newPath;
-		} //sets path for next arrow on last item in index
-		else {
-			var newPath = '/40713/cart';
-			$scope.nextItem = newPath;
-		}
-	}
 
-	//check for index in staff Kit 
-	if (staffKitIndex.indexOf(pathname) != -1) {
-		var prevKitItemIndex = staffKitIndex.indexOf(pathname);
-		if (prevKitItemIndex > 0) { 
-			prevKitItemIndex--;
-			console.log(prevKitItemIndex);
-			var prevPath = staffKitIndex[prevKitItemIndex];
-			var prevPath = prevPath.replace('/40713/', '');
-			$scope.prevItem = prevPath;
-			console.log(prevPath);
-		} 
-		if (prevKitItemIndex == 0) {
-			var prevPath = '/40713/catalog';
-			$scope.prevItem = prevPath;
-			console.log(prevPath);
-		}
-		var kitItemIndex = staffKitIndex.indexOf(pathname);
-		if (kitItemIndex < staffKitIndex.length-1) { 
-			kitItemIndex ++;
-			var newPath = staffKitIndex[kitItemIndex];
-			var newPath = newPath.replace('/40713/', '');
-			$scope.nextItem = newPath;
-		} //sets path for next arrow on last item in index
-		else {
-			var newPath = '/40713/cart';
-			$scope.nextItem = newPath;
-		}
-	}
-
+	
+    //end Kit
+	
 	$scope.calcVariantLineItems = function(i){
 		$scope.variantLineItemsOrderTotal = 0;
 		angular.forEach($scope.variantLineItems, function(item){
@@ -126,7 +77,6 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 		if (lineitem.PriceSchedule && lineitem.PriceSchedule.DefaultQuantity != 0)
 			$scope.LineItem.Quantity = lineitem.PriceSchedule.DefaultQuantity;
 	}
-
 	function init(searchTerm, callback) {
 		ProductDisplayService.getProductAndVariant($routeParams.productInteropID, $routeParams.variantInteropID, function (data) {
 			$scope.LineItem.Product = data.product;
@@ -139,11 +89,9 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 			$scope.setAddToOrderErrors();
 			data.product.Specs.ProductImage.DefaultValue = data.product.SmallImageUrl;
 			data.product.Specs.Weight.DefaultValue = data.product.ShipWeight;
-			var checkForThis = $scope.LineItem.Specs.ProductImage;		
-		//if spec does not exist spec.name = 'ProductImage'	
+			var checkForThis = $scope.LineItem.Specs.ProductImage;	
 			
-		//sets ProductImage and Weight Specs
-    	$scope.$watch('LineItem.Specs', function (spec) {
+			$scope.$watch('LineItem.Specs', function (spec) {
     		//sets Product Image Path to pre-existing four51 path
     		if (spec && (spec.Name  = 'ProductImage') && ($scope.LineItem.Product.Type != 'VariableText')) {
     			if (!$scope.LineItem.Product.IsVBOSS) {	 
@@ -160,12 +108,16 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
     				}
     			}
     		} 
-    	});
+    });
+			
 			if (angular.isFunction(callback))
 				callback();
 		}, $scope.settings.currentPage, $scope.settings.pageSize, searchTerm);
 	}
-	//end productimage
+	
+	//
+	console.log('going to send it like Mirra');
+	
 	$scope.$watch('settings.currentPage', function(n, o) {
 		if (n != o || (n == 1 && o == 1))
 			init($scope.searchTerm);
@@ -177,14 +129,13 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 			init(searchTerm) :
 			$scope.settings.currentPage = 1;
 	};
-	//deletes variants
+
 	$scope.deleteVariant = function(v, redirect) {
 		if (!v.IsMpowerVariant) return;
 		// doing this because at times the variant is a large amount of data and not necessary to send all that.
 		var d = {
 			"ProductInteropID": $scope.LineItem.Product.InteropID,
 			"InteropID": v.InteropID
-			
 		};
 		Variant.delete(d,
 			function() {
@@ -197,7 +148,6 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 		);
 	}
 
-	//sets path of addtoorder()
 	$scope.addToOrder = function(){
 		if($scope.lineItemErrors && $scope.lineItemErrors.length){
 			$scope.showAddToCartErrors = true;
@@ -209,7 +159,14 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 		}
 		if (!$scope.currentOrder.LineItems)
 			$scope.currentOrder.LineItems = [];
-        else{
+		if($scope.allowAddFromVariantList){
+			angular.forEach($scope.variantLineItems, function(item){
+				if(item.Quantity > 0){
+					$scope.currentOrder.LineItems.push(item);
+					$scope.currentOrder.Type = item.PriceSchedule.OrderType;
+				}
+			});
+		}else{
 			$scope.currentOrder.LineItems.push($scope.LineItem);
 			$scope.currentOrder.Type = $scope.LineItem.PriceSchedule.OrderType;
 		}
@@ -223,13 +180,15 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 					User.save($scope.user, function(){
 						$scope.addToOrderIndicator = true;
 							//sets path based on condition for KitItemIndex, Staff, dentist or all others
-						    if (kitItemIndex < maternityKitIndex.length-1) {
+						    if (currentKitItemIndex < maternityKitIndex.length-1) {
+								console.log(newPath);
 								$location.path(newPath);
 							} if (kitItemIndex < dentistKitIndex.length-1) {
 								$location.path(newPath);
 							} if (kitItemIndex < staffKitIndex.length-1) {
 								$location.path(newPath);
 							} else {
+							    console.log('CartPath');
                                 $location.path('/cart');   
                             }
 							

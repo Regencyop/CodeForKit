@@ -12,8 +12,7 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 	};
 	
 	//Start Kit
-	
-	
+
 	//you will need to match these up to API ID
     var maternityKitIndex = ['/40713/product/40713-MaternityKitItem1', '/40713/product/40713-MaternityKitItem2', '/40713/product/40713-MaternityKitItem3', '/40713/product/40713-MaternityKitItem4', '/40713/product/40713KitLastItem'];
 	var dentistKitIndex = ['/40713/product/40713DentistKitItem1', '/40713/product/40713DentistKitItem2', '/40713/product/40713DentistKitItem3', '/40713/product/40713DentistKitItem4', '/40713/product/40713DentistKitItem5', '/40713/product/40713DentistKitItem6', '/40713/product/40713KitLastItem'];
@@ -63,7 +62,6 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 		}
 	}
 	
-
 	
     //end Kit
 	
@@ -182,10 +180,6 @@ function ($scope, $routeParams, $route, $location, $451, Product, ProductDisplay
 							//sets path based on condition for KitItemIndex, Staff, dentist or all others
 						    if (currentKitItemIndex < maternityKitIndex.length-1) {
 								console.log(newPath);
-								$location.path(newPath);
-							} if (kitItemIndex < dentistKitIndex.length-1) {
-								$location.path(newPath);
-							} if (kitItemIndex < staffKitIndex.length-1) {
 								$location.path(newPath);
 							} else {
 							    console.log('CartPath');

@@ -1,4 +1,4 @@
-// This is built using info from case #127497 by Jen at Four51
+// The additions were built using info from case #127497 by Jen at Four51
 /* Dynamically pulls ProductImage from Small Thumbnail image on properties page
    And also pulls weight from Properties page for punchout (punching back in) cartImage
 */

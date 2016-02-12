@@ -1,0 +1,154 @@
+<style>
+  
+  .nextLine {
+    clear: both;
+  }  
+
+  .imagePreview {
+      clear: both;
+      margin: 0 auto;
+  }
+
+  .imagePreviewTwoColumn {
+      min-width: 450px;
+      max-width: 500px;
+  }
+
+@media (min-width: 990px) {
+  .pull-right-lg {
+    float: right;
+    padding: 0 15px;
+    border: none;
+  }
+}
+  
+</style>
+<section class="specform-default">
+   <!-- BREADCRUMB!-->
+   <productnav editvariant="true" product="Product" variant="Variant" />
+   <!-- SPEC FORM IMAGE PANEL!-->
+   <!--This controls the container width during edit (for the preview image)-->
+   <div class="col-xs-12 col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1" ng-hide="!Variant.PreviewUrl">
+     <div class="panel panel-default">
+       <loadingindicator ng-show="loadingImage" />
+       <div class="panel-body">
+         <figure>
+           <!--Preview image-->
+           <img class="product-image-large img-responsive" ng-src="{{Variant.PreviewUrl}}" imageonload />
+         </figure>
+       </div>
+     </div>
+   </div>
+  
+
+  <!-- Variant Preview is during edit path, !variant is before it exists -->
+
+   <!--This controls the specform container-->
+   <!-- 'col-xs-12': !Variant.PreviewUrl controls 'new' path -->
+   <!--'col-md-7': Variant.PreviewUrl controls edit path -->
+  
+   <div ng-class="{'col-xs-12': !Variant.PreviewUrl, 'col-xs-12 col-md-7': Variant.PreviewUrl }">
+     <div class="panel panel-default">
+       <div class="panel-heading">
+         <h3 class="panel-title"><span ng-show="Variant.PreviewUrl">{{'Edit' | r | xlat}} </span>{{Variant.ExternalID || 'Create New' | xlat}}</h3>
+       </div>
+       <div class="panel-body">
+         <div id="451_list_vspec" ng-show="true">
+           <div class="form-group">
+
+             <!--Image Preview-->
+             <!--This controls the image width during the creation of a 'new' card and corresponds with 
+                 the spec form field container.
+                 If variant preview does not exist, the product Large Image appears. If the variant preview does exist, this is hidden
+             -->
+             <div ng-class="{'hidden': Variant.PreviewUrl, 'imagePreviewTwoColumn col-xs-12 col-sm-12 col-md-4 col-lg-6': !Variant.PreviewUrl }">
+               <img class="pull-right-lg imagePreview" ng-src="{{Product.LargeImageUrl}}" imageonload />
+             </div>
+             <!--Edit ng-class '': isInPath('new') to adjust the container width of all specs during the initial build-->
+             <!--Edit ng-class '': isInPath('edit') to adjust the container width of all specs during the editing of a card once built.
+               For the most part this should be around 8-12 column width for large devices and 12 for small and xs. The container that surrounds this will be cut to 6 during editing-->
+             <div ng-class="{'col-xs-12 col-sm-12 col-md-6 col-lg-6': isInPath('new'),'col-xs-12 col-lg-12': isInPath('edit')}">
+
+             <!-- Add specs in here, no need for divs etc. can look like below for cleaner code or can keep in default format. Append class="". For ProductImage and weight use class="hidden" not inline styling. class="nextline" forces a return to the next line. Columns should not exceed 12-->
+
+               <!-- ********** Start Here ********** -->
+
+
+                <!-- This is a fictitious example that includes a few scenarios you may encounter -->
+                <!--Sample of different classes in New vs Edit-->
+                <!--cf class functions like clearfix, ie forces next line-->
+
+                <ocmaskfield label="Name" ng-class="{'col-xs-12  col-sm-12  col-md-12  col-lg-10  row':  isInPath('new'),'col-md-12  col-lg-12':  isInPath('edit')}"  customfield="Variant.Specs.Name"></ocmaskfield>
+                <ocmaskfield label="Title" ng-class="{'col-xs-12  col-sm-12  col-md-12  col-lg-10  row':  isInPath('new'),'col-md-12  col-lg-12':  isInPath('edit')}"  customfield="Variant.Specs.Title"></ocmaskfield>
+                <ocmaskfield label="Email" ng-class="{'col-xs-12  col-sm-12  col-md-12  col-lg-10  row':  isInPath('new'),'col-md-12  col-lg-12':  isInPath('edit')}"  customfield="Variant.Specs.Email"></ocmaskfield>
+
+                <!-- One phone field example-->
+                <!-- These can be used with ng-class or traditional class="col-xs-12" -->
+                <ocmaskfield ng-class="{'col-xs-12  col-sm-12  col-md-7  col-lg-4':  isInPath('new'),'col-md-12  col-lg-12':  isInPath('edit')}"  customfield="Variant.Specs.OfficeNumber"  mask="999.999.9999"></ocmaskfield>
+                <ocmaskfield ng-class="{'col-xs-12  col-sm-12  col-md-7  col-lg-4':  isInPath('new'),'col-md-12  col-lg-12':  isInPath('edit')}"  customfield="Variant.Specs.cellNumber"  mask="999.999.9999"></ocmaskfield>
+                <ocmaskfield ng-class="{'col-xs-12  col-sm-12  col-md-7  col-lg-4':  isInPath('new'),'col-md-12  col-lg-12':  isInPath('edit')}"  customfield="Variant.Specs.faxNumber"  mask="999.999.9999"></ocmaskfield>
+
+                <div class="cf">
+                  <p class="colorHighlight">***Some important Information***</p>
+                  <p>Some other information that is not as important</p>
+                </div>
+                <!--Traditional Classes Example-->                
+
+                <ocmaskfield label="Name" class="col-xs-12 col-md-6" hidesuffix="true" hideprefix="true" customfield="Variant.Specs.Name2"></ocmaskfield>
+                <ocmaskfield label="Title" class="col-xs-12 col-md-6 cf" hidesuffix="true" hideprefix="true" customfield="Variant.Specs.Title2"></ocmaskfield>
+                <ocmaskfield label="Email" class="col-xs-8" hidesuffix="true" hideprefix="true" customfield="Variant.Specs.Email2"></ocmaskfield>
+                <!-- hidden selection exampl, the line that it is on cannot exceed 12 -->
+                <ocselectionfield class="col-xs-4" hide-suffix="true" hide-prefix="true" label="hidden" customfield="Variant.Specs.EmailSuffix"></ocselectionfield>
+
+                <!--Three Phone Fields-->
+                <ocmaskfield class="col-xs-12 col-md-3" hide-suffix="true" hide-prefix="true" label="Sample Phone" customfield="Variant.Specs.sampleNumber1"  mask="999"></ocmaskfield>
+                <ocmaskfield class="col-xs-12 col-md-3" hide-suffix="true" hide-prefix="true" label="hidden" customfield="Variant.Specs.sampleNumber2"  mask="999"></ocmaskfield>
+                <ocmaskfield class="col-xs-12 col-md-4" hide-suffix="true" hide-prefix="true" label="hidden" customfield="Variant.Specs.sampleNumber3"  mask="9999"></ocmaskfield>
+
+                <!-- Image backer -->
+                <ocselectionfield class="col-xs-4 cf" hide-suffix="true" hide-prefix="true" label="Company Logo" customfield="Variant.Specs.backer"></ocselectionfield>
+                
+                 <!--Hidden  specs-->
+                 <customtextfield  class="hidden"  customfield="Variant.Specs.ProductImage"></customtextfield>
+                 <customtextfield  class="hidden"  customfield="Variant.Specs.Weight"></customtextfield>
+
+
+
+               <!-- ********** Ends Here ********** -->
+             </div>
+           </div>
+         </div>
+       </div>
+      
+       <!--save button-->
+       <div class="panel-footer">
+         <button ng-show="Variant.InteropID" class="btn btn-default" type="button" ng-click="saveasnew(true)"><i ng-show="variantErrors.length > 0" class="fa fa-warning"> </i>{{'Save As New' | r | xlat}}</button>
+         <button class="btn btn-primary pull-right" type="submit" ng-click="save(true)"><i ng-show="variantErrors.length > 0" class="fa fa-warning"> </i>{{'Save' | r | xlat}}</button>
+       </div>
+      
+       <div class="navbar-fixed-bottom">
+         <div class="view-error-message" ng-show="showVariantErrors && variantErrors.length">
+           <ul class="alert-warning">
+             <li class="text-center">
+               <span class="badge">
+                 <i class="fa fa-exclamation-circle fa-inverse"></i>
+                 {{variantErrors.length}}
+               </span>
+             </li>
+             <li class="text-center">
+               <ul ng-class="{'one': errorSection == 'open', 'two': errorSection == '' }">
+                 <li class="alert-warning" ng-repeat="e in variantErrors">{{e | xlat}}</li>               
+               </ul>
+             </li>
+             <li class="text-center">
+               <a ng-show="variantErrors.length > 1">
+                 <i class="fa fa-caret-down" ng-click="errorSection = 'open'" ng-hide="errorSection == 'open'"></i>
+                 <i class="fa fa-caret-up" ng-click="errorSection = ''" ng-show="errorSection == 'open'"></i>
+               </a>
+             </li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </div>
+ </section>
